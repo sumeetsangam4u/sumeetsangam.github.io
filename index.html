@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sumeet Sangam | Network Security Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* --- Reset & Basic --- */
+* { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+body { font-family: 'Roboto', sans-serif; background-color: #121212; color: #fff; overflow-x: hidden; position: relative; transition: background-color 1s ease; }
+a { text-decoration: none; color: inherit; }
+
+/* --- Particle Background --- */
+#particle-canvas { position: fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; }
+
+/* --- Header / Nav --- */
+header { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background-color: rgba(26,26,26,0.8); position: sticky; top: 0; z-index: 100; transition: 0.3s; }
+header.scrolled { background-color: rgba(26,26,26,1); box-shadow: 0 0 20px #ff4081; }
+header h1 { font-size: 1.8em; color: #ff4081; }
+nav a { margin-left: 20px; color: #fff; transition: 0.3s; position: relative; }
+nav a::after { content: ''; position: absolute; width: 0; height: 2px; background: #ff4081; left: 0; bottom: -4px; transition: 0.3s; }
+nav a.active::after { width: 100%; }
+nav a:hover { color: #ff4081; animation: neonPulse 1s infinite; }
+
+/* --- Hero Section --- */
+.hero { display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 80px 20px; opacity: 0; transform: translateY(50px); transition: 1s ease-out; position: relative; z-index:1; }
+.hero.visible { opacity: 1; transform: translateY(0); box-shadow: 0 0 20px #ff4081 inset; border-radius: 15px; }
+.hero img { width: 150px; height: 150px; border-radius: 50%; border: 3px solid #ff4081; margin-bottom: 20px; animation: glow 2s infinite alternate; }
+.hero h2 { font-size: 2em; margin-bottom: 10px; }
+.hero p { font-size: 1.2em; color: #ccc; max-width: 600px; }
+
+/* --- Sections --- */
+section { padding: 60px 20px; opacity: 0; transform: translateY(50px); transition: 1s ease-out, box-shadow 1s ease, background-color 1s ease; position: relative; z-index:1; border-radius: 15px; }
+section.visible { opacity: 1; transform: translateY(0); box-shadow: 0 0 40px rgba(255,64,129,0.3); }
+section.active { background-color: rgba(255,64,129,0.05); }
+
+/* --- Certifications Slider --- */
+.cert-slider-wrapper { overflow: hidden; position: relative; }
+.cert-slider { display: flex; gap: 20px; animation: scroll 20s linear infinite; }
+.cert-slider-wrapper:hover .cert-slider { animation-play-state: paused; }
+.cert-slider a { flex: 0 0 auto; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.cert-slider img { max-height: 150px; border-radius: 12px; box-shadow: 0 0 15px rgba(255, 64, 129, 0.3); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.cert-slider img:hover { transform: scale(1.1); box-shadow: 0 0 35px rgba(255, 64, 129, 0.8); }
+
+/* --- Projects --- */
+.projects { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+.project-card { background: rgba(26,26,26,0.8); padding: 20px; border-radius: 12px; width: 300px; transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 1s ease; opacity: 0; transform: translateY(50px); }
+.project-card.visible { opacity: 1; transform: translateY(0); box-shadow: 0 0 25px #ff4081 inset; }
+.project-card:hover { transform: translateY(-10px); box-shadow: 0 0 35px #ff4081; }
+.project-card h3 { color: #ff4081; margin-bottom: 10px; }
+.project-card p { color: #ccc; margin-bottom: 10px; }
+.project-card a { color: #ff4081; font-weight: bold; animation: neonPulse 2s infinite; }
+
+/* --- Contact --- */
+.contact { text-align: center; }
+.contact a { display: inline-block; margin: 10px; padding: 10px 20px; border: 1px solid #ff4081; border-radius: 8px; transition: 0.3s; box-shadow: 0 0 5px rgba(255,64,129,0.5); }
+.contact a:hover { background-color: #ff4081; color: #121212; box-shadow: 0 0 25px #ff4081; animation: neonPulse 2s infinite; }
+
+/* --- Footer --- */
+footer { text-align: center; padding: 20px; color: #777; position: relative; z-index:1; }
+
+/* --- Animations --- */
+@keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+@keyframes glow { 0% { box-shadow: 0 0 15px #ff4081; } 100% { box-shadow: 0 0 35px #ff4081; } }
+@keyframes neonPulse { 0%,100%{text-shadow:0 0 5px #ff4081,0 0 10px #ff4081,0 0 20px #ff4081;}50%{text-shadow:0 0 10px #ff4081,0 0 20px #ff4081,0 0 40px #ff4081;}}
+</style>
+</head>
+<body>
+
+<canvas id="particle-canvas"></canvas>
+
+<!-- Header -->
+<header id="navbar">
+  <h1>Sumeet Sangam</h1>
+  <nav>
+    <a href="#about" class="nav-link">About</a>
+    <a href="#certifications" class="nav-link">Certifications</a>
+    <a href="#projects" class="nav-link">Projects</a>
+    <a href="#contact" class="nav-link">Contact</a>
+  </nav>
+</header>
+
+<!-- Hero Section -->
+<section class="hero" id="about">
+  <img src="profile.jpg" alt="Sumeet Sangam">
+  <h2>Network Security Engineer</h2>
+  <p>Network Security Engineer skilled in Firewall Deployment, SD-WAN, ISE & DNAC.</p>
+</section>
+
+<!-- Certifications -->
+<section id="certifications">
+  <h2>Certifications & Achievements</h2>
+  <div class="cert-slider-wrapper">
+    <div class="cert-slider">
+      <a href="https://www.credly.com/badges/65420127-f8a5-42c8-be4b-91efb8f80634/linked_in_profile" target="_blank">
+        <img src="cisco-cert.png" alt="Cisco Certificate">
+      </a>
+      <a href="https://www.credly.com/badges/f7b34efc-ea69-462a-88db-f83716c5da32/linked_in_profile" target="_blank">
+        <img src="ibm-cert.png" alt="IBM Certificate">
+      </a>
+      <a href="https://www.credly.com/badges/87caa6ce-a185-4b8d-afe0-5577babb4315/linked_in_profile" target="_blank">
+        <img src="other-cert.png" alt="Other Certificate">
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Projects Section -->
+<section id="projects">
+  <h2>Projects</h2>
+  <div class="projects">
+    <div class="project-card">
+      <h3>Project One</h3>
+      <p>Short description of project one.</p>
+      <a href="#">View on GitHub</a>
+    </div>
+    <div class="project-card">
+      <h3>Project Two</h3>
+      <p>Short description of project two.</p>
+      <a href="#">View on GitHub</a>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="contact">
+  <h2>Contact Me</h2>
+  <a href="mailto:your.email@example.com">Email</a>
+  <a href="https://linkedin.com/in/sumeetsangam" target="_blank">LinkedIn</a>
+  <a href="https://github.com/sumeetsangam" target="_blank">GitHub</a>
+</section>
+
+<!-- Footer -->
+<footer>
+  &copy; 2025 Sumeet Sangam. All rights reserved.
+</footer>
+
+<script>
+// --- Scroll Fade-In & Section Active ---
+const sections = document.querySelectorAll('section');
+const navLinks = document.querySelectorAll('.nav-link');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible','active');
+    } else {
+      entry.target.classList.remove('active');
+    }
+  });
+},{threshold:0.2});
+document.querySelectorAll('.hero, section, .project-card').forEach(el => observer.observe(el));
+
+// --- Navbar scroll effect ---
+const header = document.getElementById('navbar');
+window.addEventListener('scroll',()=>{
+  if(window.scrollY>50) header.classList.add('scrolled');
+  else header.classList.remove('scrolled');
+
+  let current = '';
+  sections.forEach(section=>{
+    const top = section.offsetTop - 80;
+    if(window.scrollY >= top) current = section.getAttribute('id');
+  });
+  navLinks.forEach(link=>link.classList.remove('active'));
+  if(current) document.querySelector(`.nav-link[href="#${current}"]`)?.classList.add('active');
+});
+
+// --- Particle Background ---
+const canvas = document.getElementById('particle-canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+let particlesArray=[];
+const colors=['#ff4081','#ff4081','#ff4081','#ff4081'];
+class Particle{constructor(){this.x=Math.random()*canvas.width;this.y=Math.random()*canvas.height;this.size=Math.random()*2+1;this.speedX=Math.random()*1-0.5;this.speedY=Math.random()*1-0.5;}update(){this.x+=this.speedX;this.y+=this.speedY;if(this.x<0||this.x>canvas.width)this.speedX*=-1;if(this.y<0||this.y>canvas.height)this.speedY*=-1;}draw(){ctx.fillStyle=colors[Math.floor(Math.random()*colors.length)];ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2);ctx.fill();}}
+function initParticles(){particlesArray=[];for(let i=0;i<150;i++){particlesArray.push(new Particle());}}
+initParticles();
+function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);particlesArray.forEach(p=>{p.update();p.draw();});connect();requestAnimationFrame(animate);}
+function connect(){for(let a=0;a<particlesArray.length;a++){for(let b=a;b<particlesArray.length;b++){let dx=particlesArray[a].x-particlesArray[b].x;let dy=particlesArray[a].y-particlesArray[b].y;let distance=Math.sqrt(dx*dx+dy*dy);if(distance<120){ctx.strokeStyle='rgba(255,64,129,0.1)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(particlesArray[a].x,particlesArray[a].y);ctx.lineTo(particlesArray[b].x,particlesArray[b].y);ctx.stroke();}}}}
+animate();
+window.addEventListener('resize',()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;initParticles();});
+</script>
+
+</body>
+</html>
